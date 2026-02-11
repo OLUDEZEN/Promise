@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promise MEE!!!</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body { font-family: 'Poppins', sans-serif; }
+
+.magical-gradient {
+    background: linear-gradient(45deg,#FFE5F1,#FFB6C1,#FFC0CB,#FFE4E1);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+@keyframes gradient {
+    0% {background-position:0% 50%}
+    50% {background-position:100% 50%}
+    100% {background-position:0% 50%}
+}
+
+.glass-effect {
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 2px solid rgba(255,255,255,0.5);
+    box-shadow: 0 8px 32px rgba(255,182,193,0.25);
+}
+
+.beating { animation: beat 1.4s infinite; }
+@keyframes beat {
+    0%,100% {transform:scale(1)}
+    50% {transform:scale(1.1)}
+}
+
+.firecracker {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.sparkle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 60;
+}
+
+.gif-box img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+/* Emoji rain */
+.emoji-rain {
+    position: fixed;
+    top: -50px;
+    font-size: 24px;
+    pointer-events: none;
+    animation: fall linear forwards;
+    z-index: 0;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body class="min-h-screen magical-gradient overflow-hidden flex items-center justify-center">
+
+<div class="container mx-auto px-4 py-8 max-w-2xl text-center relative z-10">
+
+    <h1 class="text-4xl md:text-5xl font-bold text-pink-600 mb-6 beating">
+        Dezuuu Nunaaaa Promise MEE!!!
+    </h1>
+
+    <div class="glass-effect p-4 mb-6 gif-box mx-auto flex justify-center items-center">
+        <img id="gifDisplay" src="" alt="love gif">
+    </div>
+
+    <div class="glass-effect p-6 mb-6">
+        <p id="noteText" class="text-xl md:text-2xl text-pink-600 font-semibold"></p>
+    </div>
+
+    <button id="nextButton"
+        class="glass-effect px-8 py-4 text-xl font-bold text-pink-500 rounded-full
+               transition-all duration-300 hover:scale-110 beating">
+        Dezuu Nunaaa Promises❤️
+    </button>
+
+    <button id="nextPageButton"
+        class="glass-effect px-8 py-4 text-xl font-bold text-pink-500 rounded-full
+               transition-all duration-300 hover:scale-110 beating hidden mt-6">
+        Aweeee My Oluu Hamsterr!! You are I am your biggest fan!!!💖
+    </button>
+
+</div>
+
+<script>
+const notes = [
+"Dezuu Nunaa, promise me on promise day!!!",
+"Don’t ever stop loving Olu Hamster, even on the days Olu is quiet or silly.",
+"Do pamper Olu a lot, in little ways and big ones, until Olu forgets what worry feels like.",
+"Be Oluu Hamster's ruler — to control this small Oluu Hamsterr.",
+"Make tasty food for Olu Hamsterrr.",
+"Remember to marry Olu Hamster and make small small 12 Hamstersss.",
+"Promise that you will always be Oluu Hamster's biggest fan.",
+"Dezuu Nunaa, I promise to always be your sunshine on cloudy days and your shelter in storms."
+];
+
+const gifs = [
+"you.gif",
+"gif1.gif",
+"gif6.gif",
+"threat.gif",
+"please.gif",
+"dont.gif",
+"fan.gif",
+"hero.gif"
+];
+
+let currentIndex = 0;
+
+const noteText = document.getElementById("noteText");
+const gifDisplay = document.getElementById("gifDisplay");
+const nextButton = document.getElementById("nextButton");
+const nextPageButton = document.getElementById("nextPageButton");
+
+noteText.textContent = notes[0];
+gifDisplay.src = gifs[0];
+
+function firecrackerBurst(x, y) {
+    const colors = ["#ff4d6d","#ffb703","#ffd166","#ff99c8","#cdb4db","#f72585"];
+
+    for (let i = 0; i < 45; i++) {
+        const p = document.createElement("div");
+        p.className = "firecracker";
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.left = x + "px";
+        p.style.top = y + "px";
+        document.body.appendChild(p);
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 180 + 60;
+
+        gsap.to(p, {
+            x: Math.cos(angle) * distance,
+            y: Math.sin(angle) * distance,
+            opacity: 0,
+            scale: Math.random() * 1.5 + 0.5,
+            duration: Math.random() * 0.8 + 0.6,
+            ease: "power3.out",
+            onComplete: () => p.remove()
+        });
+    }
+
+    for (let i = 0; i < 20; i++) {
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.style.background = "#fff";
+        s.style.left = x + "px";
+        s.style.top = y + "px";
+        document.body.appendChild(s);
+
+        gsap.to(s, {
+            x: (Math.random() - 0.5) * 100,
+            y: (Math.random() - 0.5) * 100,
+            opacity: 0,
+            duration: 0.6,
+            onComplete: () => s.remove()
+        });
+    }
+
+    gsap.fromTo("body",
+        { x: -4 },
+        { x: 4, duration: 0.08, yoyo: true, repeat: 3, clearProps: "x" }
+    );
+}
+
+nextButton.addEventListener("click", (e) => {
+    firecrackerBurst(e.clientX, e.clientY);
+
+    if (currentIndex < notes.length - 1) {
+        currentIndex++;
+        gsap.to([noteText, gifDisplay], {
+            opacity: 0,
+            duration: 0.3,
+            onComplete: () => {
+                noteText.textContent = notes[currentIndex];
+                gifDisplay.src = gifs[currentIndex];
+                gsap.to([noteText, gifDisplay], { opacity: 1, duration: 0.4 });
+            }
+        });
+    }
+
+    if (currentIndex === notes.length - 1) {
+        nextButton.classList.add("hidden");
+        nextPageButton.classList.remove("hidden");
+    }
+});
+
+nextPageButton.addEventListener("click", () => {
+    if ("vibrate" in navigator) navigator.vibrate([200,100,200,100,400]);
+
+    for (let i = 0; i < 8; i++) {
+        firecrackerBurst(
+            Math.random() * window.innerWidth,
+            Math.random() * window.innerHeight
+        );
+    }
+
+    gsap.to("body", {
+        opacity: 0,
+        duration: 1.2,
+        delay: 0.6,
+        onComplete: () => window.location.href = "kiss.html"
+    });
+});
+
+function createEmojiRain() {
+    const emojis = ["❤️","💖","💕","💗","💓","💝","🧸"];
+    const emoji = document.createElement("div");
+    emoji.className = "emoji-rain";
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * window.innerWidth + "px";
+    emoji.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 7000);
+}
+
+setInterval(createEmojiRain, 250);
+</script>
+
+</body>
+</html>

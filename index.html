@@ -1,0 +1,255 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Day – Teddy Land</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .gradient-bg {
+        background: linear-gradient(
+            135deg,
+            #FFF1F6,
+            #FFD6E5,
+            #FFBFD4,
+            #FFE8EF
+        );
+        background-size: 300% 300%;
+        animation: gradient 18s ease infinite;
+    }
+
+    @keyframes gradient {
+        0% { background-position: 0% 50% }
+        50% { background-position: 100% 50% }
+        100% { background-position: 0% 50% }
+    }
+
+    .glass-effect {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(14px);
+        border-radius: 28px;
+        border: 1px solid rgba(255, 182, 193, 0.35);
+        box-shadow: 0 12px 30px rgba(255, 105, 180, 0.15);
+    }
+
+    .floating {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%,100% { transform: translateY(0) }
+        50% { transform: translateY(-14px) }
+    }
+
+    .heartbeat {
+        animation: heartbeat 1.8s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+        0%,100% { transform: scale(1) }
+        50% { transform: scale(1.08) }
+    }
+
+    .teddy-rain {
+        position: fixed;
+        top: -40px;
+        pointer-events: none;
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh);
+            opacity: 0;
+        }
+    }
+    </style>
+    </head>
+
+    <body class="min-h-screen gradient-bg overflow-hidden">
+
+    <div class="relative max-w-4xl mx-auto px-6 py-14 text-center">
+
+        <!-- HEADER -->
+        <div class="glass-effect p-10 mb-14 floating">
+            <h1 class="text-4xl md:text-5xl font-semibold mb-6 tracking-wide"
+                style="background:linear-gradient(45deg,#FF5FA2,#FF9BC6);
+                    -webkit-background-clip:text;
+                    -webkit-text-fill-color:transparent;">
+                Happy Promise Day, Dezuu Nunaaa
+            </h1>
+
+            <p class="text-lg md:text-xl text-pink-600 leading-relaxed max-w-2xl mx-auto">
+                You are my calm, my comfort, and my constant.  
+                Olu Hamsterrr promises love, loyalty, and forever — no conditions attached.
+            </p>
+        </div>
+
+        <!-- TEDDY -->
+        <div id="mainTeddy"
+            class="w-56 h-56 mx-auto mb-14 cursor-pointer floating">
+            <svg viewBox="0 0 200 200" class="w-full h-full">
+                <defs>
+                    <linearGradient id="teddyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#FF9BC6"/>
+                        <stop offset="100%" stop-color="#FFBFD4"/>
+                    </linearGradient>
+                </defs>
+
+                <circle cx="100" cy="100" r="80" fill="url(#teddyGradient)"/>
+                <circle cx="100" cy="112" r="58" fill="#FFE1EC"/>
+
+                <circle cx="76" cy="82" r="7" fill="#4A4A4A"/>
+                <circle cx="124" cy="82" r="7" fill="#4A4A4A"/>
+                <circle cx="100" cy="96" r="9" fill="#FF7FA8"/>
+
+                <path d="M86 112 Q100 122 114 112"
+                    stroke="#4A4A4A" stroke-width="3" fill="none"/>
+
+                <circle cx="70" cy="104" r="9" fill="#FF9BC6" opacity="0.5"/>
+                <circle cx="130" cy="104" r="9" fill="#FF9BC6" opacity="0.5"/>
+            </svg>
+        </div>
+
+        <!-- BUTTON -->
+        <button id="nextButton"
+            class="glass-effect text-pink-600 font-semibold py-4 px-14 rounded-full
+                text-lg transition-transform duration-300 hover:scale-105 heartbeat">
+            Continue with Olu’s Demands ❤️
+        </button>
+
+        <!-- SURPRISE -->
+        <div id="surprise"
+            class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                    glass-effect p-10 hidden text-center max-w-sm">
+            <p class="text-3xl font-semibold mb-4"
+            style="background:linear-gradient(45deg,#FF5FA2,#FF9BC6);
+                    -webkit-background-clip:text;
+                    -webkit-text-fill-color:transparent;">
+                Caution: Extreme Cuteness Ahead!💖
+            </p>
+            <p class="text-lg text-pink-600">
+                Oluu Hamsterr will stay with you forever, through every smile and tear.
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+    /* ---------------- AMBIENT RAIN ---------------- */
+    function createTeddyRain() {
+        const items = ["❤️","💖","💕","💗","💓","💝","🧸"];
+        const el = document.createElement('div');
+        el.textContent = items[Math.floor(Math.random()*items.length)];
+        el.className = 'teddy-rain text-xl';
+        el.style.left = Math.random()*100 + 'vw';
+        el.style.animationDuration = (Math.random()*3 + 4) + 's';
+        el.style.opacity = Math.random() * 0.6 + 0.4;
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 8000);
+    }
+    setInterval(createTeddyRain, 450);
+
+    /* ---------------- PAGE INTRO ---------------- */
+    gsap.from(".glass-effect", {
+        y: 40,
+        opacity: 0,
+        duration: 1.6,
+        ease: "power2.out",
+        stagger: 0.25
+    });
+
+    /* ---------------- TEDDY INTERACTION ---------------- */
+    const teddy = document.getElementById('mainTeddy');
+
+    teddy.addEventListener('click', () => {
+        gsap.timeline()
+            .to(teddy, {
+                scale: 1.18,
+                rotation: -4,
+                duration: 0.25,
+                ease: "power2.out"
+            })
+            .to(teddy, {
+                scale: 1,
+                rotation: 0,
+                duration: 0.45,
+                ease: "elastic.out(1, 0.5)"
+            });
+
+        createSparkles();
+    });
+
+    function createSparkles() {
+        for (let i = 0; i < 12; i++) {
+            const s = document.createElement('div');
+            s.textContent = '✨';
+            s.style.position = 'absolute';
+            s.style.left = '50%';
+            s.style.top = '50%';
+            s.style.pointerEvents = 'none';
+            s.style.transform = 'translate(-50%,-50%)';
+            teddy.appendChild(s);
+
+            gsap.to(s, {
+                x: (Math.random() - 0.5) * 120,
+                y: (Math.random() - 0.5) * 120,
+                opacity: 0,
+                scale: 0,
+                duration: 1,
+                ease: "power1.out",
+                onComplete: () => s.remove()
+            });
+        }
+    }
+
+    /* ---------------- SURPRISE ---------------- */
+    setTimeout(() => {
+        const s = document.getElementById('surprise');
+        s.classList.remove('hidden');
+
+        gsap.fromTo(s,
+            { scale: 0.6, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 1.8, ease: "back.out(1.7)" }
+        );
+
+        setTimeout(() => {
+            gsap.to(s, {
+                scale: 0.8,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => s.classList.add('hidden')
+            });
+        }, 4200);
+    }, 2400);
+
+    /* ---------------- BUTTON EXIT ---------------- */
+    document.getElementById('nextButton').addEventListener('click', () => {
+        gsap.to('#nextButton', {
+            scale: 0.92,
+            duration: 0.15,
+            yoyo: true,
+            repeat: 1
+        });
+
+        gsap.to('body', {
+            opacity: 0,
+            duration: 1.2,
+            delay: 0.2,
+            ease: "power2.inOut",
+            onComplete: () => window.location.href = 'promise.html'
+        });
+    });
+    </script>
+
+
+    </body>
+    </html>

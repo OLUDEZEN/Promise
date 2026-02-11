@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Promise Made on Promise Day</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+h2 {
+    text-align: center;
+    color: #ff1493;
+    margin-bottom: 20px;
+}
+
+.text-box {
+    border: 2px solid #ff69b4;
+    padding: 20px;
+    border-radius: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.checkbox-container input {
+    margin-top: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background: #ccc;
+    color: white;
+    cursor: not-allowed;
+}
+
+button.active {
+    background: #ff1493;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Promise Made on Promise Day</h2>
+
+    <div class="text-box">
+        I, Diksha Sherpa (also known as Dezen Sherpa), daughter of Shri
+        Wangdi Sherpa and Shrimati Archana Pradhan, an Indian citizen,
+        hereby declare that of my own free will and without any coercion or
+        undue influence, I love Puspa Kamal Rai. I solemnly pledge to stand
+        by him, support him emotionally and morally, and share my life with
+        him. I further affirm my clear and unequivocal intention to marry
+        him in accordance with the applicable laws of India and to remain
+        committed to him throughout my life.
+
+        <br><br>
+
+        The statements made herein are true and correct to the best of our
+        knowledge and belief, and that nothing material has been concealed.
+    </div>
+
+    <div class="checkbox-container">
+        <input type="checkbox" id="agreeCheck">
+        <label for="agreeCheck">
+            *I agree to all the terms and condition of OLuu Hamster and decide
+            to marry him and choose him above all.
+        </label>
+    </div>
+
+    <button id="viewBtn" disabled>View Document</button>
+
+</div>
+
+<script>
+const checkbox = document.getElementById("agreeCheck");
+const button = document.getElementById("viewBtn");
+
+checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
+        button.disabled = false;
+        button.classList.add("active");
+    } else {
+        button.disabled = true;
+        button.classList.remove("active");
+    }
+});
+
+button.addEventListener("click", () => {
+    window.open("pdf.html", "_blank");
+});
+</script>
+
+</body>
+</html>
